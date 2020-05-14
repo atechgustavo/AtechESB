@@ -15,13 +15,7 @@ paths:
     post:
       summary: Mensagem síncrona
       operationId: post-SyncMessage
-      description: |
-        Requisição recebida do sistema origem é encaminhada ao sistema destino imediatamente e a resposta é aguardada para imediata devolução a origem.
-
-        * O corpo da requisição é exatamente o que deve ser enviado ao sistema de destino.
-        * A resposta recebida será exatamente a resposta recebida do destino.
-        * Tanto requisição quanto resposta ficarão registradas no banco de dados [AtechESB], na tabela [mensagem_sincrona]. Eventuais erros ficarão registrados na tabela [mensagem_sincrona_erro].
-        * O campo **[user_agent]** da tabela reflete o _header_ da requisição original, ou seja, é o User-Agent do sistema de origem.
+      description: "Requisição recebida do sistema origem é encaminhada ao sistema destino imediatamente e a resposta é aguardada para imediata devolução a origem.\n\n* O corpo da requisição é exatamente o que deve ser enviado ao sistema de destino.\n* A resposta recebida será exatamente a resposta recebida do destino.\n* Tanto requisição quanto resposta ficarão registradas no banco de dados **AtechESB**, na tabela **mensagem_sincrona**. Eventuais erros ficarão registrados na tabela \\[mensagem_sincrona_erro\\].\n* O campo **[user_agent]** da tabela reflete o _header_ da requisição original, ou seja, é o _User-Agent_ do sistema de origem.\n"
       parameters:
         - schema:
             type: string
