@@ -2,15 +2,44 @@ openapi: 3.0.0
 info:
   title: AtechESB
   version: '1.0'
+  description: "API's core do ESB Automatech sobre Talend"
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://SRV-INTEGRA.atech.local:8240/services/AtechESB/v1'
+    description: DEV
+  - url: 'http://SRV-INTEGRA.atech.local:8140/services/AtechESB/v1'
+    description: HML
+  - url: 'http://SRV-INTEGRA.atech.local:8040/services/AtechESB/v1'
+    description: PROD
 paths:
   /SyncMessage:
     post:
-      summary: ''
+      summary: Mensagem síncrona
       operationId: post-SyncMessage
-      responses:
-        '200':
-          description: OK
+      description: |
+        Requisição recebida do sistema origem é encaminhada ao sistema destino imediatamente e a resposta é aguardada para imediata devolução a origem.
+
+        * O corpo da requisição é exatamente o que deve ser enviado ao sistema de destino.
+        * A resposta recebida será exatamente a resposta recebida do destino.
+        * Tanto requisição quanto resposta ficarão registradas no banco de dados [AtechESB], na tabela [mensagem_sincrona]. Eventuais erros ficarão registrados na tabela [mensagem_sincrona_erro].
+        * O campo **[user_agent]** da tabela reflete o _header_ da requisição original, ou seja, é o User-Agent do sistema de origem.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Destino-URL
+          description: URL final do sistema que deve receber a mensagem (sistema de destino).
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: Origem-App-Titulo
+          description: 'Nome da aplicação de origem, para fins de registro e identificação. Exemplo: SalesMachine, Salesforce, ...'
+        - schema:
+            type: string
+          in: header
+          name: Origem-App-Versao
+          description: 'Versão da aplicação de origem, para fins de registro e identificação. Exemplo: 1.2.476'
+      tags:
+        - Core
 components:
   schemas: {}
